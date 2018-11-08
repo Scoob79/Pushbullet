@@ -14,7 +14,7 @@
 #################################################################
 
 # Aide
-
+#set -x
 aide () {
 echo "
      ▄███████▄ ███    █▄     ▄████████    ▄█    █▄    ▀█████████▄  ███    █▄   ▄█        ▄█          ▄████████     ███     
@@ -57,42 +57,42 @@ avec des retour de chariot\"
 # Liste les périphériques
 
 list_device () {
-if [ -z $1 ]; then echo "Il manque la clé API."; echo "Fin du script.";exit 1; fi
+if [ -z "$1" ]; then echo "Il manque la clé API."; echo "Fin du script.";exit 1; fi
 
-curl --header 'Access-Token: '$1 https://api.pushbullet.com/v2/devices | jq .
+curl --header 'Access-Token: '"$1" https://api.pushbullet.com/v2/devices | jq .
 }
 
 # Envoie un push à tout les device
 
 push_commun () {
-if [ -z $1 ]; then echo "Il manque la clé API."; erreur=1; fi
-if [ -z $2 ]; then echo "Il manque le titre."; erreur=1; fi
-if [ -z $3 ]; then echo "Il manque le message."; erreur=1; fi
-if [ -z $erreur ]; then echo "Fin du script."; erreur=1; exit 1; fi
-r=$(curl -i -u $1: -H "Accept: application/json" -X POST -d "type=note" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
+if [ -z "$1" ]; then echo "Il manque la clé API."; erreur=1; fi
+if [ -z "$2" ]; then echo "Il manque le titre."; erreur=1; fi
+if [ -z "$3" ]; then echo "Il manque le message."; erreur=1; fi
+if [ -n "$erreur" ]; then echo "Fin du script."; erreur=1; exit 1; fi
+r=$(curl -i -u "$1": -H "Accept: application/json" -X POST -d "type=note" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
 
 }
 
 # Envoie un push à un contact
 
 push_contact () {
-if [ -z $1 ]; then echo "Il manque la clé API."; erreur=1; fi
-if [ -z $2 ]; then echo "Il manque le titre."; erreur=1; fi
-if [ -z $3 ]; then echo "Il manque le message."; erreur=1; fi
-if [ -z $4 ]; then echo "Il manque l'adresse mail."; erreur=1; fi
-if [ -z $erreur ]; then echo "Fin du script."; erreur=1; exit 1; fi
-r=$(curl -i -u $1: -H "Accept: application/json" -X POST -d "type=note" -d "emaIl=$4;" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
+if [ -z "$1" ]; then echo "Il manque la clé API."; erreur=1; fi
+if [ -z "$2" ]; then echo "Il manque le titre."; erreur=1; fi
+if [ -z "$3" ]; then echo "Il manque le message."; erreur=1; fi
+if [ -z "$4" ]; then echo "Il manque l'adresse mail."; erreur=1; fi
+if [ -n "$erreur" ]; then echo "Fin du script."; erreur=1; exit 1; fi
+r=$(curl -i -u "$1": -H "Accept: application/json" -X POST -d "type=note" -d "email=$4;" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
 }
 
 # Envoie un push à un device
 
 push_device () {
-if [ -z $1 ]; then echo "Il manque la clé API."; erreur=1; fi
-if [ -z $2 ]; then echo "Il manque le titre."; erreur=1; fi
-if [ -z $3 ]; then echo "Il manque le message."; erreur=1; fi
-if [ -z $4 ]; then echo "Il manque l'iden du périphérique."; erreur=1; fi
-if [ -z $erreur ]; then echo "Fin du script."; erreur=1; exit 1; fi
-r=$(curl -i -u $1: -H "Accept: application/json" -X POST -d "type=note" -d "iden=$4;" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
+if [ -z "$1" ]; then echo "Il manque la clé API."; erreur=1; fi
+if [ -z "$2" ]; then echo "Il manque le titre."; erreur=1; fi
+if [ -z "$3" ]; then echo "Il manque le message."; erreur=1; fi
+if [ -z "$4" ]; then echo "Il manque l'iden du périphérique."; erreur=1; fi
+if [ -n "$erreur" ]; then echo "Fin du script."; erreur=1; exit 1; fi
+r=$(curl -i -u "$1": -H "Accept: application/json" -X POST -d "type=note" -d "iden=$4;" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
 }
 
 # Liste les push
