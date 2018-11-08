@@ -79,7 +79,7 @@ push_contact () {
 if [ -z $1 ]; then echo "Il manque la clé API."; erreur=1; fi
 if [ -z $2 ]; then echo "Il manque le titre."; erreur=1; fi
 if [ -z $3 ]; then echo "Il manque le message."; erreur=1; fi
-if [ -z $4 ]; then echo "Il manque l'adresse maIl."; erreur=1; fi
+if [ -z $4 ]; then echo "Il manque l'adresse mail."; erreur=1; fi
 if [ -z $erreur ]; then echo "Fin du script."; erreur=1; exit 1; fi
 r=$(curl -i -u $1: -H "Accept: application/json" -X POST -d "type=note" -d "emaIl=$4;" -d "title=$2" -d "body=$3" https://api.pushbullet.com/v2/pushes > log)
 }
